@@ -1,0 +1,334 @@
+{
+  "pixel_classifier_type": "OpenCVPixelClassifier",
+  "metadata": {
+    "inputPadding": 0,
+    "inputResolution": {
+      "pixelWidth": {
+        "value": 0.5034,
+        "unit": "µm"
+      },
+      "pixelHeight": {
+        "value": 0.5034,
+        "unit": "µm"
+      },
+      "zSpacing": {
+        "value": 1.0,
+        "unit": "z-slice"
+      },
+      "timeUnit": "SECONDS",
+      "timepoints": []
+    },
+    "inputWidth": 512,
+    "inputHeight": 512,
+    "inputNumChannels": 3,
+    "outputType": "CLASSIFICATION",
+    "outputChannels": [
+      {
+        "name": "Ignore*",
+        "color": 16776702
+      },
+      {
+        "name": "Positive",
+        "color": -16711936
+      }
+    ],
+    "classificationLabels": {
+      "0": {
+        "name": "Ignore*",
+        "colorRGB": -4934476
+      },
+      "1": {
+        "name": "Positive",
+        "colorRGB": -16711936
+      }
+    }
+  },
+  "op": {
+    "type": "data.op.channels",
+    "colorTransforms": [
+      {
+        "channelName": "Red"
+      },
+      {
+        "channelName": "Green"
+      },
+      {
+        "channelName": "Blue"
+      },
+      {
+        "stains": {
+          "name": "H-DAB default",
+          "stain1": {
+            "r": 0.2274406796076734,
+            "g": 0.4338862492515625,
+            "b": 0.8717875084961993,
+            "name": "Hematoxylin",
+            "isResidual": false
+          },
+          "stain2": {
+            "r": 0.3833265801731948,
+            "g": 0.5276742302384141,
+            "b": 0.7580373603424969,
+            "name": "DAB",
+            "isResidual": false
+          },
+          "stain3": {
+            "r": -0.6146501238609408,
+            "g": 0.7583442185140833,
+            "b": -0.21706973875691296,
+            "name": "Residual",
+            "isResidual": true
+          },
+          "maxRed": 243.0,
+          "maxGreen": 243.0,
+          "maxBlue": 243.0
+        },
+        "stainNumber": 1
+      },
+      {
+        "stains": {
+          "name": "H-DAB default",
+          "stain1": {
+            "r": 0.2274406796076734,
+            "g": 0.4338862492515625,
+            "b": 0.8717875084961993,
+            "name": "Hematoxylin",
+            "isResidual": false
+          },
+          "stain2": {
+            "r": 0.3833265801731948,
+            "g": 0.5276742302384141,
+            "b": 0.7580373603424969,
+            "name": "DAB",
+            "isResidual": false
+          },
+          "stain3": {
+            "r": -0.6146501238609408,
+            "g": 0.7583442185140833,
+            "b": -0.21706973875691296,
+            "name": "Residual",
+            "isResidual": true
+          },
+          "maxRed": 243.0,
+          "maxGreen": 243.0,
+          "maxBlue": 243.0
+        },
+        "stainNumber": 2
+      },
+      {
+        "stains": {
+          "name": "H-DAB default",
+          "stain1": {
+            "r": 0.2274406796076734,
+            "g": 0.4338862492515625,
+            "b": 0.8717875084961993,
+            "name": "Hematoxylin",
+            "isResidual": false
+          },
+          "stain2": {
+            "r": 0.3833265801731948,
+            "g": 0.5276742302384141,
+            "b": 0.7580373603424969,
+            "name": "DAB",
+            "isResidual": false
+          },
+          "stain3": {
+            "r": -0.6146501238609408,
+            "g": 0.7583442185140833,
+            "b": -0.21706973875691296,
+            "name": "Residual",
+            "isResidual": true
+          },
+          "maxRed": 243.0,
+          "maxGreen": 243.0,
+          "maxBlue": 243.0
+        },
+        "stainNumber": 3
+      }
+    ],
+    "op": {
+      "type": "op.core.sequential",
+      "ops": [
+        {
+          "type": "op.core.sequential",
+          "ops": [
+            {
+              "type": "op.core.sequential",
+              "ops": [
+                {
+                  "type": "op.local",
+                  "sigmaMean": 8.0,
+                  "sigmaStdDev": 8.0
+                },
+                {
+                  "type": "op.core.split-merge",
+                  "ops": [
+                    {
+                      "type": "op.multiscale",
+                      "features": [
+                        "GAUSSIAN"
+                      ],
+                      "sigmaX": 0.5,
+                      "sigmaY": 0.5
+                    },
+                    {
+                      "type": "op.multiscale",
+                      "features": [
+                        "GAUSSIAN"
+                      ],
+                      "sigmaX": 1.0,
+                      "sigmaY": 1.0
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "type": "op.feature-preprocessor",
+              "preprocessor": {
+                "normalizer": {
+                  "offsets": [
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "scales": [
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "missingValue": 0.0
+                },
+                "inputLength": 12,
+                "outputLength": 12
+              }
+            }
+          ]
+        },
+        {
+          "type": "op.opencv-statmodel",
+          "model": {
+            "class": "ANN_MLP",
+            "statmodel": {
+              "format": 3,
+              "layer_sizes": [
+                12,
+                2
+              ],
+              "activation_function": "SIGMOID_SYM",
+              "f_param1": 1.0,
+              "f_param2": 1.0,
+              "min_val": -9.4999999999999996e-01,
+              "max_val": 9.4999999999999996e-01,
+              "min_val1": -9.7999999999999998e-01,
+              "max_val1": 9.7999999999999998e-01,
+              "training_params": {
+                "train_method": "RPROP",
+                "dw0": 1.0000000000000001e-01,
+                "dw_plus": 1.2000000000000000e+00,
+                "dw_minus": 5.0000000000000000e-01,
+                "dw_min": 1.1920928955078125e-07,
+                "dw_max": 50.0,
+                "term_criteria": {
+                  "epsilon": 1.0000000000000000e-02,
+                  "iterations": 1000
+                }
+              },
+              "input_scale": [
+                1.2259035520369961e+00,
+                -4.1957409148143360e-02,
+                1.2325514952938608e+00,
+                -6.5184439121654628e-02,
+                1.2210014434571315e+00,
+                -9.4069668184237579e-02,
+                1.3376379633326925e+00,
+                5.7050057189509479e-02,
+                1.2872357542118187e+00,
+                8.6210149228078178e-03,
+                1.4686037841540864e+00,
+                -6.6005421436409837e-03,
+                1.8725761000973575e+00,
+                -6.5492087472882557e-02,
+                1.8155637423825610e+00,
+                -9.3654980331784043e-02,
+                1.7038445785082765e+00,
+                -1.2665712852600447e-01,
+                2.1642279255986123e+00,
+                9.2889825560366901e-02,
+                2.2055340742440270e+00,
+                1.7481296398789481e-02,
+                3.5127860197942269e+00,
+                -1.7059149668624114e-02
+              ],
+              "output_scale": [
+                1.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              "inv_output_scale": [
+                1.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              "weights": [
+                [
+                  -5.5988241392409532e-01,
+                  -3.6206523232830184e-01,
+                  5.8018928662926894e-01,
+                  4.1609901681201475e-02,
+                  -3.1627012482771694e-01,
+                  -1.9773424730774430e-01,
+                  -1.5656694131121733e+00,
+                  -8.9568320224316822e-02,
+                  -1.3137109415440178e+00,
+                  -7.5304682745516022e-02,
+                  -4.2446988249417894e-02,
+                  -2.1657518265863157e-01,
+                  1.1356182451018129e+00,
+                  -1.0373786333912556e+00,
+                  -1.4348072743560264e-01,
+                  6.4521619323818613e-02,
+                  -2.0958170658860553e-01,
+                  -5.5773752002407817e-01,
+                  -2.2243828524418313e-01,
+                  1.1449757505299991e+00,
+                  2.8757067919660073e-01,
+                  -3.9564020456146237e-01,
+                  -4.7864432973186127e-02,
+                  5.5718951785880355e-01,
+                  2.5294247903945770e+00,
+                  -3.1391874547660965e+00
+                ]
+              ]
+            }
+          },
+          "requestProbabilities": false
+        },
+        {
+          "type": "op.core.convert",
+          "pixelType": "UINT8"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "pixel_classifier_type": "OpenCVPixelClassifier",
+  "metadata": {
+    "inputPadding": 0,
+    "inputResolution": {
+      "pixelWidth": {
+        "value": 0.5034,
+        "unit": "µm"
+      },
+      "pixelHeight": {
+        "value": 0.5034,
+        "unit": "µm"
+      },
+      "zSpacing": {
+        "value": 1.0,
+        "unit": "z-slice"
+      },
+      "timeUnit": "SECONDS",
+      "timepoints": []
+    },
+    "inputWidth": 512,
+    "inputHeight": 512,
+    "inputNumChannels": 3,
+    "outputType": "CLASSIFICATION",
+    "outputChannels": [
+      {
+        "name": "Ignore*",
+        "color": 16776702
+      },
+      {
+        "name": "Positive",
+        "color": -16711936
+      }
+    ],
+    "classificationLabels": {
+      "0": {
+        "name": "Ignore*",
+        "colorRGB": -4934476
+      },
+      "1": {
+        "name": "Positive",
+        "colorRGB": -16711936
+      }
+    }
+  },
+  "op": {
+    "type": "data.op.channels",
+    "colorTransforms": [
+      {
+        "channelName": "Red"
+      },
+      {
+        "channelName": "Green"
+      },
+      {
+        "channelName": "Blue"
+      }
+    ],
+    "op": {
+      "type": "op.core.sequential",
+      "ops": [
+        {
+          "type": "op.core.sequential",
+          "ops": [
+            {
+              "type": "op.core.split-merge",
+              "ops": [
+                {
+                  "type": "op.multiscale",
+                  "features": [
+                    "GAUSSIAN"
+                  ],
+                  "sigmaX": 1.0,
+                  "sigmaY": 1.0
+                }
+              ]
+            },
+            {
+              "type": "op.feature-preprocessor",
+              "preprocessor": {
+                "normalizer": {
+                  "offsets": [
+                    0.0,
+                    0.0,
+                    0.0
+                  ],
+                  "scales": [
+                    1.0,
+                    1.0,
+                    1.0
+                  ],
+                  "missingValue": 0.0
+                },
+                "inputLength": 3,
+                "outputLength": 3
+              }
+            }
+          ]
+        },
+        {
+          "type": "op.opencv-statmodel",
+          "model": {
+            "class": "ANN_MLP",
+            "statmodel": {
+              "format": 3,
+              "layer_sizes": [
+                3,
+                2
+              ],
+              "activation_function": "SIGMOID_SYM",
+              "f_param1": 1.0,
+              "f_param2": 1.0,
+              "min_val": -9.4999999999999996e-01,
+              "max_val": 9.4999999999999996e-01,
+              "min_val1": -9.7999999999999998e-01,
+              "max_val1": 9.7999999999999998e-01,
+              "training_params": {
+                "train_method": "RPROP",
+                "dw0": 1.0000000000000001e-01,
+                "dw_plus": 1.2000000000000000e+00,
+                "dw_minus": 5.0000000000000000e-01,
+                "dw_min": 1.1920928955078125e-07,
+                "dw_max": 50.0,
+                "term_criteria": {
+                  "epsilon": 1.0000000000000000e-02,
+                  "iterations": 1000
+                }
+              },
+              "input_scale": [
+                5.6877427415383250e-02,
+                -1.2317244261226307e+01,
+                4.5509351313072155e-02,
+                -9.2889923240968475e+00,
+                3.6353392197756476e-02,
+                -6.8195568142725635e+00
+              ],
+              "output_scale": [
+                1.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              "inv_output_scale": [
+                1.0,
+                0.0,
+                1.0,
+                0.0
+              ],
+              "weights": [
+                [
+                  -2.8236561392409526e-01,
+                  -5.8502358154401823e-01,
+                  8.5770608662926895e-01,
+                  -8.0613978824941790e-01,
+                  1.6010491517228301e-01,
+                  -2.3387884289818692e-01,
+                  2.6303355696718254e+00,
+                  -3.4284877597556020e+00
+                ]
+              ]
+            }
+          },
+          "requestProbabilities": false
+        },
+        {
+          "type": "op.core.convert",
+          "pixelType": "UINT8"
+        }
+      ]
+    }
+  }
+}
