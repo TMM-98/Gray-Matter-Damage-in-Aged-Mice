@@ -1,3 +1,5 @@
+please note that these models require tensorflow or else need to be converted to work with newer releases of QuPath.
+
 **models were trained in StarDist [1] and are in part based on the MonuSeq Data Segmentation Challenge [2,3]**
 
 1. Schmidt, U.; Weigert, M.; Broaddus, C.; Myers, G. Cell detection with star-convex polygons. In Proceedings of the Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics); 2018.
